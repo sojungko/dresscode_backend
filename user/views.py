@@ -1,16 +1,16 @@
-from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from .models import User
+from .serializers import UserSerializer
 
-def index(request):
-    all_users = User.objects.all()
-    return render(request, 'user/index.html', {'all_users': all_users})
+class UserList(APIView):
     
-def detail(request, user_id):
-    try:
-        user = User.objects.get(pk=user_id)
-    except User.DoesNotExist:
-        raise Http404("User does not exist")
-    return render(request, 'user/detail.html', {'user': user})
-        
+    def get(self, request):
+        users = User.objects.all()
+        serializer = StockSerializer(users, many=True)
+        return Response(serializer.data)
     
+    def post(self):
+        pass

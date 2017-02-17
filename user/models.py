@@ -27,11 +27,11 @@ class Comment(models.Model):
     
 class Like(models.Model):
     liker = models.ForeignKey(User, on_delete=models.CASCADE)
-    picture = models.ForeignKey(Picture, on_delete=models.CCASCADE)
+    picture = models.ForeignKey(Picture, on_delete=models.CASCADE)
     liked = models.BooleanField()
     
     def __str__(self):
-        if self.liked:       
+        if self.liked == True:       
             return self.liker + ' liked ' + self.picture
         elif self.liked == None:
             return self.liker + " hasn't liked " + self.picture
